@@ -25,12 +25,13 @@
 
 package org.geysermc.geyser.inventory;
 
-import com.github.steveice10.mc.protocol.data.game.entity.player.Hand;
 import lombok.Getter;
 import lombok.Setter;
 import org.checkerframework.checker.nullness.qual.NonNull;
 import org.geysermc.geyser.GeyserImpl;
+import org.geysermc.geyser.item.type.Item;
 import org.geysermc.geyser.session.GeyserSession;
+import org.geysermc.mcprotocollib.protocol.data.game.entity.player.Hand;
 import org.jetbrains.annotations.Range;
 
 public class PlayerInventory extends Inventory {
@@ -71,6 +72,10 @@ public class PlayerInventory extends Inventory {
             return GeyserItemStack.EMPTY;
         }
         return items[36 + heldItemSlot];
+    }
+
+    public boolean eitherHandMatchesItem(@NonNull Item item) {
+        return getItemInHand().asItem() == item || getItemInHand(Hand.OFF_HAND).asItem() == item;
     }
 
     public void setItemInHand(@NonNull GeyserItemStack item) {
